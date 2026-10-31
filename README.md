@@ -33,6 +33,11 @@ Visit http://127.0.0.1:8000. The ZIP includes the bundled 3D viewer; to rebuild 
 
 ## Three-minute demo
 
+**Watch the recorded walkthrough:** https://wardspace-healthcare.vercel.app/demo.html
+
+**Direct MP4 for submissions:** https://wardspace-healthcare.vercel.app/demo.mp4
+
+
 See [DEMO.md](DEMO.md) for the timed walkthrough. Select Deterioration and wait ~30 seconds to cross thresholds. Acknowledge the alert, then record a simulated response. Demonstrate offline buffering and reconnect. Do not present synthetic results as clinical validation.
 
 ## Vercel + Neon
@@ -73,7 +78,7 @@ Public demo sessions use unguessable browser IDs, not authenticated clinical acc
 - Source repository and technical documentation: included.
 - Blender source and reproducible exporter: included.
 - Working prototype: included; test the final hosted deployment before submission.
-- Three-minute video: timed script included; record and upload the actual walkthrough.
+- Three-minute video: recorded, captioned walkthrough included as `public/demo.mp4`. The presentation records the live rendered scene and telemetry while operating the app controls.
 - Supplied rules require 2–3 members and list an October 24, 2026 deadline. Confirm any extension with the organizer.
 
 ## Attribution

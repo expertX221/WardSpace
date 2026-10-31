@@ -1,3 +1,11 @@
+# Recorded walkthrough
+
+Watch: https://wardspace-healthcare.vercel.app/demo.html
+
+Direct MP4: https://wardspace-healthcare.vercel.app/demo.mp4
+
+Captioned three-minute recording of the live demo presentation. No voiceover. All patient data is synthetic. The presentation layer records the actual 3D renderer and current DOM telemetry; scheduled actions operate the application controls.
+
 # Three-minute recording script
 
 0:00–0:25 — Show the Blender room and explain the problem: at-home patients lack continuous oversight. Orbit the scene; show the breathing blanket and gateway signals. State that all data is synthetic.
