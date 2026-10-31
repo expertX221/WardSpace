@@ -1,0 +1,1 @@
+{"name":"wardspace","version":"1.0.0","private":true,"scripts":{"start":"python server.py","test":"python -m unittest discover -s tests","build":"node scripts/build.cjs"},"dependencies":{"@google/model-viewer":"^4.0.0","pg":"^8.16.0","@vercel/functions":"^3.0.0"},"devDependencies":{"vercel":"latest"},"overrides":{"zod":"^4.6.6"}}

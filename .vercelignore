@@ -1,0 +1,7 @@
+WardSpace.blend
+*.db
+__pycache__
+tests
+node_modules
+.env*
+build_room.py

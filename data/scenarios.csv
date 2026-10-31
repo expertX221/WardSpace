@@ -1,0 +1,5 @@
+scenario,hr,spo2,temp,rr,sys,note
+stable,72,98,36.7,16,118,Resting comfortably
+fever,105,96,38.6,23,109,Feeling warm
+deterioration,124,88,37.8,30,86,Patient feels breathless
+recovery,82,97,37.1,18,114,No chest pain

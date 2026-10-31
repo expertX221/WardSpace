@@ -1,0 +1,11 @@
+const roomView=document.getElementById('roomView');
+const controls=document.createElement('div');controls.className='model-controls';
+for(const [label,action] of [['Ⅱ Pause animation','pause'],['↗ Bed view','bed'],['⌁ Gateway view','gateway'],['◉ Overview','overview']]){const b=document.createElement('button');b.className='quiet';b.textContent=label;b.onclick=()=>{const m=window.roomModel;if(!m)return;switch(action){case'pause':if(m.paused){m.play();b.textContent='Ⅱ Pause animation'}else{m.pause();b.textContent='▷ Play animation'}break;case'bed':m.cameraTarget='-0.4m 1m 0m';m.cameraOrbit='25deg 50deg 5m';break;case'gateway':m.cameraTarget='-2.5m 1m -0.7m';m.cameraOrbit='40deg 65deg 4m';break;default:m.cameraTarget='auto auto auto';m.cameraOrbit='35deg 55deg auto'}};controls.append(b)}
+document.querySelector('.room-controls').after(controls);
+const observer=new MutationObserver(()=>{const m=document.querySelector('model-viewer');if(!m||m.dataset.enhanced)return;m.dataset.enhanced='true';
+ m.style.position='absolute';m.style.inset='0';m.style.opacity='0';
+ m.addEventListener('load',()=>{m.style.opacity='1';if(matchMedia('(prefers-reduced-motion: reduce)').matches)m.pause()});
+ m.addEventListener('error',()=>{m.remove();document.getElementById('scene').style.display='block'});
+ for(const [name,pos,label] of [['hr','-0.4m 1.5m -0.3m','Heart sensor'],['spo2','1.55m 1.8m -1m','Vital monitor'],['hub','-2.8m 1.5m -0.9m','Room gateway']]){let b=document.createElement('button');b.slot='hotspot-'+name;b.dataset.position=pos;b.dataset.normal='0m 1m 0m';b.className='model-hotspot';b.textContent=label;b.onclick=()=>{const target=document.getElementById('vital-'+name);if(target){target.scrollIntoView({behavior:'smooth',block:'center'});target.animate([{background:'#c7dfae'},{background:'#fffef8'}],1600)}else document.getElementById('offline').focus()};m.append(b)}
+});observer.observe(roomView,{childList:true});
+setInterval(()=>{const level=document.getElementById('riskLevel').textContent;roomView.dataset.risk=level.includes('High')?'high':level.includes('Medium')?'medium':'low';document.querySelectorAll('.model-hotspot').forEach(b=>b.dataset.risk=roomView.dataset.risk)},1000);

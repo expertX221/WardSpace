@@ -1,1 +1,74 @@
-# HealthCare
+# WardSpace — a hospital-aware home
+
+An interactive Blender digital twin meets a working home-care simulation: **Sense → Understand → Predict → Alert → Respond**.
+
+![Blender home ward](public/room.png)
+
+## Run in VS Code
+
+Open this folder. Python 3.10+ runs the local application without dependencies:
+
+```sh
+python server.py
+```
+
+Visit http://127.0.0.1:8000. The ZIP includes the bundled 3D viewer; to rebuild it, install Node.js 20+ and run `npm ci` then `npm run build`. The local API stores events in SQLite. No API keys, hardware or external AI service are needed for local mode.
+
+## What works
+
+- Original Blender bedroom, exported as GLB, with breathing blanket and gateway pulse animation.
+- Orbit/zoom, sensor hotspots, camera presets, animation pause and reduced-motion support. CSS room fallback if WebGL cannot load.
+- Five simulated vital streams, trend sparklines, stable/fever/deterioration/recovery scenarios.
+- Transparent Low/Medium/High rule scoring with reasons and English caregiver note keywords.
+- Alert acknowledgment, explicit simulated caregiver responses, attendance self-report and downloadable history.
+- Persistent browser outbox, idempotent event ingestion, reconnect retry, simulated power loss, stale-data indication, service-worker cache after initial visit.
+- Vercel Node API and Neon Postgres schema; standalone Python/SQLite local alternative.
+
+## Three-minute demo
+
+See [DEMO.md](DEMO.md) for the timed walkthrough. Select Deterioration and wait ~30 seconds to cross thresholds. Acknowledge the alert, then record a simulated response. Demonstrate offline buffering and reconnect. Do not present synthetic results as clinical validation.
+
+## Vercel + Neon
+
+1. Apply `migrations/001_events.sql` to a dedicated Neon database.
+2. Import this GitHub repository into Vercel. Framework: Other, build: `npm run build`, output: `public`.
+3. Set **server-only** `DATABASE_URL` in Vercel (pooled Neon connection string with SSL). Never put it in public files or commit it.
+4. Deploy. `POST /api/events` persists events and recalculates risk on the server. `GET /api/events?session=<browser-session-uuid>` retrieves that demo session's recent events.
+
+The database has been provisioned separately; credentials are deliberately excluded from source and ZIP.
+
+## Blender
+
+Open `WardSpace.blend` in Blender 5.2. Press Space in the timeline to play frames 1–180. `build_room.py` recreates the scene, exports `public/room.glb` and renders `public/room.png`:
+
+```sh
+blender --background --python build_room.py
+```
+
+## Checks
+
+```sh
+python -m unittest discover -s tests
+node --check public/app.js
+node --check api/events.js
+```
+
+## Safety and scope
+
+**Experimental software, synthetic patients only.** Thresholds are illustrative and unvalidated. No diagnosis, treatment recommendations, calibrated probability, or validated 24–48 hour forecast is provided. Trend detection across five accelerated samples is an exploratory pattern only. Keywords cannot reliably interpret clinical language. Caregiver acknowledgment does not prove patient safety.
+
+Escalation and caregiver contact are in-app simulations. There are no real SMS/phone notifications, hardware integrations, verified attendance, battery backup or background monitoring after the browser closes. An in-app demonstration satisfies the alert/acknowledgment wording supplied, but only the organizer can confirm channel requirements.
+
+Public demo sessions use unguessable browser IDs, not authenticated clinical accounts. This is not an access-control boundary for real records. No real patient data should be entered. Production needs authenticated roles, audit integrity, retention limits, rate limiting, validated clinical thresholds, notification delivery guarantees and prospective evaluation. Browser storage is not encrypted clinical storage.
+
+## Submission checklist
+
+- Source repository and technical documentation: included.
+- Blender source and reproducible exporter: included.
+- Working prototype: included; test the final hosted deployment before submission.
+- Three-minute video: timed script included; record and upload the actual walkthrough.
+- Supplied rules require 2–3 members and list an October 24, 2026 deadline. Confirm any extension with the organizer.
+
+## Attribution
+
+Original room geometry created procedurally in Blender. Website uses Google model-viewer (Apache-2.0), node-postgres (MIT), Vercel Functions utilities (MIT), and Google Fonts DM Sans/Manrope (SIL Open Font License). System font fallback works offline. AI assistance was used for implementation; the submitting team must understand and explain the code.
