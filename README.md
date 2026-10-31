@@ -1,5 +1,10 @@
 # WardSpace — a hospital-aware home
 
+WardSpace is an interactive 3D home-healthcare prototype built with Blender, Three.js, Vercel, and Neon. It combines simulated patient vitals, explainable risk scoring, caregiver alerts, and offline buffering in an immersive digital bedroom.
+
+Sense → Understand → Predict → Alert → Respond
+
+Uses synthetic data and demonstration rules; not clinically validated.
 **Live website:** https://wardspace-healthcare.vercel.app
 
 A persistent cinematic 3D experience with a spatial patient HUD meets a working home-care simulation: **Sense → Understand → Predict → Alert → Respond**.
