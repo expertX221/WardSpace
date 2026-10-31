@@ -5,3 +5,10 @@ node_modules/
 *.db
 __pycache__/
 *.blend1
+
+.vercel
+.env*
+
+public/vendor/three/
+public/vendor/engine/
+public/cinematic.bundle.js

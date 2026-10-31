@@ -32,3 +32,10 @@ Browser localStorage saves the queue before network submission. Sequential repla
 ## Limits and future work
 
 No identity verification, remote caregiver device, background delivery, diagnosis or clinically validated prediction. A 24–48 hour model requires longitudinal labeled patient data, leakage-safe temporal splits, calibration, subgroup evaluation, prospective validation and clinician-defined escalation protocols. Production also needs access control, ingestion quotas, encryption/retention policy, trusted sensor timestamps and robust note interpretation.
+
+
+## Immersive spatial interface v2
+
+One persistent Three.js renderer draws four spatially separated groups. Original Blender GLB geometry and animation form the bedroom; a procedural two-lobe core, data-packet network, and caregiver console are authored in cinematic.js. Scroll position drives a continuous camera rail without overriding native scrolling. A shared HUD mirrors the real synthetic readings and risk category. Camera zoom unlocks four explanatory steps per scene. HTML controls remain available independently of WebGL.
+
+Motion can be paused globally. Reduced motion removes ambient movement and smoothing. Camera controls and detail steps provide keyboard/touch alternatives. The background uses real-time rendered animation plus procedural aurora/grid layers, not a prerecorded patient video. Esbuild bundles the renderer and loader to avoid import-map loading failures. Legacy viewer code is retained but the new page uses the persistent renderer. The browser outbox and Neon API are unchanged.

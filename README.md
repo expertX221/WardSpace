@@ -2,7 +2,7 @@
 
 **Live website:** https://wardspace-healthcare.vercel.app
 
-An interactive Blender digital twin meets a working home-care simulation: **Sense → Understand → Predict → Alert → Respond**.
+A persistent cinematic 3D experience with a spatial patient HUD meets a working home-care simulation: **Sense → Understand → Predict → Alert → Respond**.
 
 ![Blender home ward](public/room.png)
 
@@ -18,8 +18,8 @@ Visit http://127.0.0.1:8000. The ZIP includes the bundled 3D viewer; to rebuild 
 
 ## What works
 
-- Original Blender bedroom, exported as GLB, with breathing blanket and gateway pulse animation.
-- Orbit/zoom, sensor hotspots, camera presets, animation pause and reduced-motion support. CSS room fallback if WebGL cannot load.
+- Detailed sci-fi Blender bedroom with titanium materials, luminous panels, animated breathing blanket, gateway pulses and a cinematic camera clip.
+- Four connected Three.js scenes: smart bedroom, procedural intelligence core, moving alert network and caregiver display. Scroll camera choreography, zoom explanations, physical camera presets, animation pause, reduced-motion handling and an image fallback.
 - Five simulated vital streams, trend sparklines, stable/fever/deterioration/recovery scenarios.
 - Transparent Low/Medium/High rule scoring with reasons and English caregiver note keywords.
 - Alert acknowledgment, explicit simulated caregiver responses, attendance self-report and downloadable history.
@@ -73,5 +73,4 @@ Public demo sessions use unguessable browser IDs, not authenticated clinical acc
 
 ## Attribution
 
-Original room geometry created procedurally in Blender. Website uses Google model-viewer (Apache-2.0), node-postgres (MIT), Vercel Functions utilities (MIT), and Google Fonts DM Sans/Manrope (SIL Open Font License). System font fallback works offline. AI assistance was used for implementation; the submitting team must understand and explain the code.
-
+Original room geometry created procedurally in Blender. Website uses Three.js (MIT), esbuild (MIT), bundled Google model-viewer (Apache-2.0, retained legacy viewer), node-postgres (MIT), Vercel Functions utilities (MIT), and Google Fonts DM Sans/Manrope (SIL Open Font License). System font fallback works offline. AI assistance was used for implementation; the submitting team must understand and explain the code.
