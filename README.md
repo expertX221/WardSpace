@@ -1,5 +1,7 @@
 # WardSpace — a hospital-aware home
 
+**Live website:** https://wardspace-healthcare.vercel.app
+
 An interactive Blender digital twin meets a working home-care simulation: **Sense → Understand → Predict → Alert → Respond**.
 
 ![Blender home ward](public/room.png)
@@ -72,3 +74,4 @@ Public demo sessions use unguessable browser IDs, not authenticated clinical acc
 ## Attribution
 
 Original room geometry created procedurally in Blender. Website uses Google model-viewer (Apache-2.0), node-postgres (MIT), Vercel Functions utilities (MIT), and Google Fonts DM Sans/Manrope (SIL Open Font License). System font fallback works offline. AI assistance was used for implementation; the submitting team must understand and explain the code.
+
