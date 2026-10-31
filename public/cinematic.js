@@ -3,7 +3,7 @@ import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 const host=document.getElementById('world'),status=document.getElementById('sceneStatus');
 let renderer;
-try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:new URLSearchParams(location.search).has('record'),powerPreference:'high-performance'});}catch{status.textContent='3D unavailable · care console remains fully usable';document.body.classList.add('no-webgl');}
+try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});}catch{status.textContent='3D unavailable · care console remains fully usable';document.body.classList.add('no-webgl');}
 if(renderer){try{start()}catch(error){console.error('3D initialization failed',error);status.textContent='3D unavailable · the live care console is still ready';document.body.classList.add('no-webgl')}}
 function start(){
  renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));renderer.setSize(innerWidth,innerHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;host.append(renderer.domElement);
@@ -89,3 +89,4 @@ function start(){
  }requestAnimationFrame(animate);
  renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();status.textContent='3D paused by the device · care console is still available'});
 }
+

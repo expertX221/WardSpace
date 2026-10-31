@@ -1,11 +1,19 @@
 const $=id=>document.getElementById(id), key='wardspace-v1';
-let state=JSON.parse(localStorage.getItem(key)||'null')||{queue:[],events:[],alerts:[],note:'',checked:false,history:[]};
+function loadState(){
+ const empty={queue:[],events:[],alerts:[],note:'',checked:false,history:[]};
+ try{const saved=JSON.parse(localStorage.getItem(key)||'null');
+ if(!saved||typeof saved!=='object')return empty;
+ for(const name of ['queue','events','alerts','history'])if(Array.isArray(saved[name]))empty[name]=saved[name].filter(x=>x&&typeof x==='object');
+ empty.note=typeof saved.note==='string'?saved.note.slice(0,1500):'';empty.checked=saved.checked===true;return empty;
+ }catch{return empty}
+}
+let state=loadState();
 let scenario='stable',paused=false,offline=false,power=false,busy=false,last=0,step=0;
 const fields=[['hr','Heart rate','bpm'],['spo2','Oxygen saturation','%'],['temp','Temperature','°C'],['rr','Respiratory rate','/min'],['sys','Systolic BP','mmHg']];
-function save(){localStorage.setItem(key,JSON.stringify(state));$('queueText').textContent=`${state.queue.length} events pending · saved to this browser`;}
+function save(){try{localStorage.setItem(key,JSON.stringify(state))}catch{$('connection').textContent='Storage unavailable · keep this tab open'}$('queueText').textContent=`${state.queue.length} events pending · saved to this browser`;}
 function toast(s){$('toast').textContent=s;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),3000)}
 function risk(d,n){let score=0,reasons=[];[[d.spo2<92,4,'Oxygen saturation below demo threshold (92%)'],[d.hr>110||d.hr<50,2,'Heart rate outside demo range (50–110)'],[d.rr>24||d.rr<10,2,'Respiratory rate outside demo range (10–24)'],[d.temp>=38,2,'Temperature at or above 38°C'],[d.sys<90,3,'Systolic pressure below 90 mmHg']].forEach(([c,p,r])=>{if(c){score+=p;reasons.push(r)}});const flagged=['breathless','confused','chest pain','dizzy'].filter(t=>new RegExp('\\b'+t+'\\b','i').test(n)&&!new RegExp('\\b(no|not|without)\\s+(?:\\w+\\s+){0,2}'+t+'\\b','i').test(n));if(flagged.length){score+=2;reasons.push('Caregiver reported: '+flagged.join(', '))}return {score,level:score>=4?'High':score>=2?'Medium':'Low',reasons:reasons.length?reasons:['No demonstration thresholds exceeded']}}
-function event(type,data={}){const e={id:crypto.randomUUID(),type,data,at:Date.now(),note:state.note,session:sessionId};state.queue.push(e);state.events.unshift(e);state.events=state.events.slice(0,200);save();sync();return e}
+function event(type,data={}){const e={id:crypto.randomUUID(),type,data,at:Date.now(),note:state.note,session:sessionId};state.queue.push(e);state.events.unshift(e);state.events=state.events.slice(0,200);save();renderActivity();sync();return e}
 const sessionId=localStorage.getItem('wardspace-session')||crypto.randomUUID();localStorage.setItem('wardspace-session',sessionId);
 async function sync(){if(busy||offline||!navigator.onLine||!state.queue.length)return;busy=true;try{while(state.queue.length&&!offline){const r=await fetch('/api/events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(state.queue[0])});if(!r.ok)throw Error('API '+r.status);await r.json();state.queue.shift();save()}$('connection').textContent='● Connected · synced';}catch(e){$('connection').textContent='◌ Local mode · queued'}finally{busy=false}}
 function renderRisk(r){$('riskLevel').textContent=r.level+' risk';$('riskLevel').className='risk '+r.level.toLowerCase();$('score').textContent=r.score;$('riskTitle').textContent={Low:'A reassuring moment.',Medium:'A closer look is needed.',High:'A caregiver response is needed.'}[r.level];$('reasons').replaceChildren(...r.reasons.map(s=>{let li=document.createElement('li');li.textContent=s;return li}));}
@@ -21,6 +29,6 @@ $('checkin').onclick=()=>{state.checked=!state.checked;event('attendance',{check
 $('saveNote').onclick=()=>{state.note=$('note').value.trim().slice(0,1500);event('note',{text:state.note});toast('Note saved. Risk includes note on next sample.');sample()};$('note').value=state.note;
 $('rotate').oninput=e=>{$('scene').style.transform=`rotateX(54deg) rotateZ(${-35+ +e.target.value}deg)`;if(window.roomModel)window.roomModel.cameraOrbit=`${e.target.value}deg 55deg auto`};$('resetView').onclick=()=>{$('rotate').value=0;$('rotate').dispatchEvent(new Event('input'))};document.querySelectorAll('[data-focus]').forEach(b=>b.onclick=()=>{let el=$('vital-'+b.dataset.focus);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.animate([{background:'#d9e9cf'},{background:'#fffef8'}],1500)}else toast('Gateway sends durable sensor events to the API')});
 $('history').onclick=()=>{let blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='wardspace-care-history.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
-setInterval(()=>{if(last)$('fresh').textContent=Date.now()-last>10000?'STALE · last reading '+Math.floor((Date.now()-last)/1000)+'s ago':'Live · '+new Date(last).toLocaleTimeString();renderAlerts();sync()},3000);window.addEventListener('online',sync);attendance();renderAlerts();sample();setInterval(sample,3000);
+setInterval(()=>{if(last)$('fresh').textContent=Date.now()-last>10000?'STALE · last reading '+Math.floor((Date.now()-last)/1000)+'s ago':'Live · '+new Date(last).toLocaleTimeString();renderAlerts();sync()},3000);window.addEventListener('online',sync);window.addEventListener('offline',()=>{$('connection').textContent='◌ Network offline · buffering'});attendance();renderAlerts();sample();setInterval(sample,3000);
 // The persistent cinematic renderer supplies the Blender scene.
 if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});

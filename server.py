@@ -3,20 +3,30 @@ import json, sqlite3, time, uuid
 from pathlib import Path
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from functools import partial
+from contextlib import contextmanager
 from risk import assess
+from urllib.parse import urlsplit, parse_qs
 
 ROOT = Path(__file__).parent
 DB = ROOT / 'wardspace.db'
+@contextmanager
 def connection():
     db = sqlite3.connect(DB)
     db.execute('CREATE TABLE IF NOT EXISTS events (id TEXT PRIMARY KEY, payload TEXT NOT NULL)')
-    return db
+    try:
+        with db: yield db
+    finally: db.close()
 
 class Handler(SimpleHTTPRequestHandler):
     def do_GET(self):
-        if self.path == '/api/events':
+        if urlsplit(self.path).path == '/api/events':
+            session = parse_qs(urlsplit(self.path).query).get('session', [''])[0]
+            if not session or len(session)>100: return self.reply({'error':'Session required'},400)
             with connection() as db:
-                self.reply([json.loads(r[0]) for r in db.execute('SELECT payload FROM events ORDER BY rowid DESC LIMIT 200')])
+                rows=db.execute('SELECT payload FROM events ORDER BY rowid DESC')
+                events=(json.loads(r[0]) for r in rows)
+                from itertools import islice
+                self.reply(list(islice((e for e in events if e.get('session')==session),200)))
         else: super().do_GET()
     def reply(self, data, status=200):
         body = json.dumps(data).encode()
@@ -29,6 +39,7 @@ class Handler(SimpleHTTPRequestHandler):
             event=json.loads(self.rfile.read(length))
             if event.get('type') not in ['reading','note','attendance','acknowledge','response']: raise ValueError('Unknown event type')
             if not isinstance(event.get('id'),str) or len(event['id'])>100: raise ValueError('Invalid id')
+            if not isinstance(event.get('session'),str) or not 1<=len(event['session'])<=100: raise ValueError('Invalid session')
             if event['type']=='reading': event['risk']=assess(event['data'], event.get('note',''))
             event['receivedAt']=time.time()
             with connection() as db:

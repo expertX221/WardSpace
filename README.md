@@ -84,3 +84,13 @@ Public demo sessions use unguessable browser IDs, not authenticated clinical acc
 ## Attribution
 
 Original room geometry created procedurally in Blender. Website uses Three.js (MIT), esbuild (MIT), bundled Google model-viewer (Apache-2.0, retained legacy viewer), node-postgres (MIT), Vercel Functions utilities (MIT), and Google Fonts DM Sans/Manrope (SIL Open Font License). System font fallback works offline. AI assistance was used for implementation; the submitting team must understand and explain the code.
+
+## October 2026 update
+
+- Searchable activity log for readings, notes, check-ins, acknowledgments and responses; newest 200 browser events, latest 30 matches displayed.
+- Filtered CSV export with escaped cells and spreadsheet formula protection; existing JSON download retains the complete browser snapshot.
+- Recovery from malformed saved JSON and explicit network-offline indication.
+- Local history API now requires a session and filters results by session, matching hosted behavior. Session IDs remain demo isolation, not authentication.
+- Updated offline asset cache includes the activity log and removes previous WardSpace caches on activation.
+
+Run regression checks with `npm test` and `node --test tests/activity.test.cjs`. The ZIP includes generated viewer assets; run `python server.py` to start directly in VS Code.
