@@ -1,0 +1,5 @@
+torch==2.12.1
+transformers==5.13.0
+peft==0.21.2
+accelerate
+spaces==0.51.3

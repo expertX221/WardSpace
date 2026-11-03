@@ -12,7 +12,9 @@ Round 2 adds an AutoScientist experiment for reconstructing unfinished caregiver
 - Held-out inputs are excluded from the upload and checked for exact prompt overlap
 - Training hyperparameters are selected by AutoScientist and recorded in `public/training-run.json` when returned
 
-The separate seeds sample the same generator distribution. A held-out score would measure synthetic task performance. Independent real workflow evaluation remains future work. The interactive research page runs a deterministic reference engine. Model inference, held-out metrics, and a checkpoint must be verified after training completes.
+The run completed successfully with a 91.54% platform best win rate after one iteration. The checkpoint was downloaded and its archive and hash verified. See MODEL_CARD.md for the recorded training setup and runtime limitations.
+
+The separate seeds sample the same generator distribution. A held-out score would measure synthetic task performance. Independent real workflow evaluation remains future work. The interactive research page runs a deterministic reference engine. Trained inference and held-out metrics require a supported endpoint for the exported adapter.
 
 ## Open in VS Code
 
@@ -36,10 +38,12 @@ Run `python -m unittest discover -s tests`, `node --test tests/*.test.cjs`, and 
 
 ## Evaluation and submission status
 
-Planned held-out metrics are exact JSON match, per-alert state accuracy, and false attendance rate. No measured accuracy is claimed before checkpoint evaluation. The platform's best win rate is a separate metric. Training completion, artifact availability, final evaluation, and organizer submission require verification.
+Planned held-out metrics are exact JSON match, per-alert state accuracy, and false attendance or omission rate. These remain unmeasured. The verified platform best win rate is 91.54%. Training completion and artifact availability are verified. Organizer form submission is handled by the participant.
 
 Project URL after deployment is `https://wardspace-healthcare.vercel.app/research.html`. The public training snapshot records the last checked timestamp so judges can distinguish a snapshot from live monitoring.
 
 The original 3D room, cinematic journey, telemetry HUD, care console, and original CSS are retained from the supplied project. Round 2 is an added section below the console. Its standalone lab is available at `/research-lab.html`.
 
-An Adaption interface is being generated at `https://adaptionlabs.ai/app/chat/623cf1e7-2c5f-45e0-9ed5-0b9f3e38878f/interface/3b7e35bb-54f0-4d30-b93f-a236a61564f9`. This is an authenticated builder URL. A public deployment link must be verified after publishing.
+The public Adaption interface is published at `https://wardspace-handoff.adaptionlabs.app/`. Its training result is verified. It displays the model export status and leaves trained inference disabled.
+
+The trained adapter repository is `https://huggingface.co/Saiyv43/WardSpace-Handoff-Qwen3.5-4B-LoRA`. Hugging Face hosting code is prepared under `hosting/huggingface`. This account's Gradio and Docker compute options require PRO. The participant chose to retain the exported model and published Adaption demo without paid hosting, so live trained inference and the separate 300-case evaluation remain pending.

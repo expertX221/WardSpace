@@ -1,5 +1,7 @@
 # WardSpace — a hospital-aware home
 
+Round 2 adds an AutoScientist-trained handoff model while preserving the original 3D experience. The run succeeded with **91.54% platform best win rate**. Open the [3D demo and research section](https://wardspace-healthcare.vercel.app/research.html), [Adaption deployment](https://wardspace-handoff.adaptionlabs.app/), and [trained adapter](https://huggingface.co/Saiyv43/WardSpace-Handoff-Qwen3.5-4B-LoRA). See [ROUND2.md](ROUND2.md) and [MODEL_CARD.md](MODEL_CARD.md) for setup, evidence, and current inference limitations.
+
 WardSpace is an interactive 3D home-healthcare prototype built with Blender, Three.js, Vercel, and Neon. It combines simulated patient vitals, explainable risk scoring, caregiver alerts, and offline buffering in an immersive digital bedroom.
 
 Sense → Understand → Predict → Alert → Respond
