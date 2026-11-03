@@ -1,4 +1,7 @@
 node_modules/
+artifacts/
+training/new-experiment.json
+training/*predictions*.jsonl
 .vercel/
 .env*
 !.env.example
