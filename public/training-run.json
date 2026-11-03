@@ -1,0 +1,18 @@
+{
+  "id": "fe9d6d0f-7c4a-4ede-b198-aca407971185",
+  "dataset_id": "09fe8fa8-3537-476d-b586-e0fbf71596c0",
+  "model": "Qwen/Qwen3.5-4B",
+  "status": "running",
+  "created_at": "2026-11-03T10:35:46.253000Z",
+  "completed_at": null,
+  "iterations_completed": 0.0,
+  "max_iterations": 3.0,
+  "target_win_rate": 0.7,
+  "best_win_rate": null,
+  "training_method": "instruction",
+  "best_hyperparams": null,
+  "column_mapping": null,
+  "download_available": false,
+  "error": null,
+  "checked_at": "2026-11-03T10:38:27.827822+00:00"
+}

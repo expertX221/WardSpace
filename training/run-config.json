@@ -1,0 +1,9 @@
+{
+  "dataset_id": "09fe8fa8-3537-476d-b586-e0fbf71596c0",
+  "run_id": "fe9d6d0f-7c4a-4ede-b198-aca407971185",
+  "training_examples": 1800,
+  "heldout_examples": 300,
+  "model": "Qwen/Qwen3.5-4B",
+  "max_iterations": 3,
+  "data_provenance": "Synthetic histories generated with random seeds 221 and 8173. Exact prompt overlap excluded."
+}
