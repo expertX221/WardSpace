@@ -1,0 +1,28 @@
+{
+  "provenance": "synthetic",
+  "exact_input_overlap": 0,
+  "splits": {
+    "train": {
+      "rows": 1800,
+      "unique_inputs": 1800,
+      "sha256": "6c5499748a4684fd8ff8e012ad3eafb54fb719fc68fe164d9daf7f14b9e506a8",
+      "alert_states": {
+        "unacknowledged": 1776,
+        "attended": 554,
+        "acknowledged": 406
+      },
+      "cases_requiring_visit": 1444
+    },
+    "heldout": {
+      "rows": 300,
+      "unique_inputs": 300,
+      "sha256": "c90e1e0c4abfe3b88feeff08c69cf31d992bdb39e9b0fcc4b534dcb9b4c4ca46",
+      "alert_states": {
+        "unacknowledged": 308,
+        "attended": 94,
+        "acknowledged": 68
+      },
+      "cases_requiring_visit": 247
+    }
+  }
+}
